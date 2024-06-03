@@ -1,36 +1,52 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'bindings/initial_binding.dart';
+import 'controllers/common/theme_controller.dart';
+import 'firebase_options.dart';
+import 'routes/app_routes.dart';
 
-import 'screens/home_screen.dart';
-import 'screens/quiz_screen.dart';
-import 'screens/result_screen.dart';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initFireBase();
+  InitialBinding().dependencies();
 
-void main() {
-  runApp(const ProviderScope(child: QuizApp()));
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
+    runApp(const MyApp());
+  });
 }
 
-class QuizApp extends StatelessWidget {
-  const QuizApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+      navigatorKey: navigatorKey,
+      title: 'Flutter Demo',
+      theme: Get.find<ThemeController>().getlightheme(),
+      darkTheme: Get.find<ThemeController>().getDarkTheme(),
+      getPages: AppRoutes.pages(),
       debugShowCheckedModeBanner: false,
-      title: 'Nepal Quiz App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: GoogleFonts.montserrat().fontFamily,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const HomeScreen(),
-        '/quiz': (context) => const QuizScreen(),
-        '/result': (context) => ResultScreen(
-              score: ModalRoute.of(context)?.settings.arguments as int,
-              totalQuestions: 10, // Replace with the actual total questions
-            ),
-      },
     );
   }
 }
+
+Future<void> initFireBase() async {
+  await Firebase.initializeApp(
+    name: 'quizieee-demo',
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
+// void main(List<String> args) async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await initFireBase();
+//   runApp(GetMaterialApp(
+//     home: DataUploaderScreen(),
+//   ));
+// }

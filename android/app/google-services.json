@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1061651412992",
+    "project_id": "quizieee",
+    "storage_bucket": "quizieee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061651412992:android:8ee2ae785c9212dd0380e5",
+        "android_client_info": {
+          "package_name": "com.dcaayush.codes.quizieee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR82IgeCeka3ZYbb4y6_cXklc-I1aBd18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
